@@ -1,0 +1,7 @@
+.main_container {
+  height: 100%;
+}
+
+.main_container > section {
+  height: 100%;
+}
