@@ -1,3 +1,8 @@
+import Switching from './switching';
+import anime from './anime.min.js';
+import './../css/base.css';
+import './../css/style.css';
+
 const $ = function (str) {
   if (!str) return false;
   let el = document.querySelector(str);
@@ -45,22 +50,13 @@ let anime1 = anime ({
   }
 });
 
-let Switching = window.Switching('.main_container');
+anime1.play();
 
-Switching.on("slide", (e) => {
-  switch (e.index) {
-    case 0:
-      console.log(0);
-      anime1.play();
-      break;
-    case 1:
-      console.log(1);
-      break;
-    case 2:
-      console.log(2);
-      break;
-    case 3:
-      console.log(3);
-      break;
-  }
+var Switch = Switching({
+  target: '.main_container',
+  loop: false
+});
+
+Switch.on("slide", (e) => {
+  console.log(e);
 });

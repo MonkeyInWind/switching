@@ -76,14 +76,14 @@ let aniEnd = () => {
   fire("slide", Api);
 }
 
-let changeScene = (direction, els) => {
+let changeScene = (direction, els, loop) => {
   els[sceneIndex].style.transition = "all 0.8s ease";
   isTransition = true;
   switch (direction) {
     case "up":
       els[sceneIndex].style.opacity = 0;
       els[sceneIndex].style.transform = `translate3D(0, -${clientH}px, 0)scale(0.1)`;
-      sceneIndex = sceneIndex >= Len - 1 ? 0 : sceneIndex + 1;
+      sceneIndex = sceneIndex >= Len - 1 ? (loop ? 0 : Len - 1) : sceneIndex + 1;
       els[sceneIndex].style.transition = "none";
       els[sceneIndex].style.transform = `translate3D(0, ${clientH}px, 0)scale(0.1)`;
       break;
@@ -147,14 +147,15 @@ let changeScene = (direction, els) => {
     els[sceneIndex].style.transition = "all 0.8s ease";
     els[sceneIndex].style.opacity = 1;
     els[sceneIndex].style.transform = `translate3D(0, 0, 0)`;
-    // els[sceneIndex].removeEventListener("webkitTransitionEnd", aniEnd);
     if (direction) els[sceneIndex].addEventListener("webkitTransitionEnd", aniEnd);
   }, 50);
 }
 
 
 
-window.Switching = (mainEl) => {
+const Switching = (opts) => {
+  let mainEl = opts.target || "";
+  let loop = opts.loop === false ? false : true;
   initial(mainEl);
   let mainContainer = document.querySelector(mainEl);
   let itemEl = mainContainer.children;
@@ -183,7 +184,8 @@ window.Switching = (mainEl) => {
     itemEl[sceneIndex].style.transform = `translate3D(${diffX}px, ${diffY}px, 0)`;
     if ((moveX <= 0 || moveX >= clientW || moveY <= 0 || moveY >=clientH) && (diffX !=0 || diffY !=0)) {
       let direction = getDirection(diffX, diffY);
-      changeScene(direction, itemEl);
+      Api.direction = direction;
+      changeScene(direction, itemEl, loop);
     }
   });
 
@@ -199,11 +201,13 @@ window.Switching = (mainEl) => {
     diffX = touchEndX - touchStartX;
     diffY = touchEndY - touchStartY;
     let direction = getDirection(diffX, diffY);
-    changeScene(direction, itemEl);
+    Api.direction = direction;
+    changeScene(direction, itemEl, loop);
   });
   Api.index = sceneIndex;
   Api.scene = itemEl[sceneIndex];
   Api.sections = itemEl;
+  Api.direction = Api.direction || "";
   document.addEventListener("DOMContentLoaded", () => {
     fire("slide", Api);
   });
@@ -212,3 +216,5 @@ window.Switching = (mainEl) => {
   }, { passive: false });
   return Api;
 }
+
+export default Switching;
