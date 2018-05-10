@@ -52,9 +52,8 @@ let anime1 = anime ({
 
 anime1.play();
 
-var Switch = Switching({
-  target: '.main_container',
-  loop: false
+var Switch = new Switching({
+  target: '.main_container'
 });
 
 Switch.on("slide", (e) => {
