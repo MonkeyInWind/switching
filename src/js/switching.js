@@ -142,7 +142,7 @@ class Switching {
         els[this.sceneIndex].style.transform = `translate3D(-${this.clientW}px, ${this.clientH}px, 0)scale(0.1)rotate(-90deg)`;
         this.sceneIndex = this.sceneIndex <= 0 ? this.Len - 1 : this.sceneIndex - 1;
         els[this.sceneIndex].style.transition = "none";
-        els[this.sceneIndex].style.transform = `translate3D(${clientW}px, -${clientH}px, 0)scale(0.1)rotate(90deg)`;
+        els[this.sceneIndex].style.transform = `translate3D(${this.clientW}px, -${this.clientH}px, 0)scale(0.1)rotate(90deg)`;
         break;
       case "down_right":
         els[this.sceneIndex].style.opacity = 0;

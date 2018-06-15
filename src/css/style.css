@@ -4,6 +4,7 @@
 
 .main_container > section {
   height: 100%;
+  overflow: hidden;
 }
 
 .div1 {
